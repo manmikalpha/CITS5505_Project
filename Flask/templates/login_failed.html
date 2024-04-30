@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Registration Successful | My New Flask</title> 
+     <title>Login Form | My New Flask</title> 
      <link rel="stylesheet" href="{{ url_for('static', filename='CSS/myCSS.css') }}"  /> 
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 
@@ -12,12 +12,14 @@
   <body>
     <div class="container">
       <div class="wrapper">
-        <h1>User added successfully!</h1>
-        <div class="signup-link">Please  <a href="login.html">Sign In</a></div>
+        <div class="title"><span>Authentication Failed</span></div>
+        <form method="post">
+          <div class="row">
+            <h3 style="color:Red;">Login Failed or User not available. Please register to access.</h3>
+          </div>
+          <div class="signup-link">Not a member? <a href="registration.html">Signup now</a></div>
+        </form>
       </div>
     </div>
-    </body>
-  </html>
-
-
-
+  </body>
+</html>

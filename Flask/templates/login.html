@@ -27,6 +27,14 @@
             <input type="submit" value="Login">
           </div>
           <div class="signup-link">Not a member? <a href="registration.html">Signup now</a></div>
+          <br><br>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+                <h5 style="color:red;">{{ message }}</h3>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
         </form>
       </div>
     </div>

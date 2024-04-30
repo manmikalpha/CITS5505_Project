@@ -38,10 +38,11 @@
             <input type="submit" value="Sign Up">
           </div>
           <div class="signup-link">Already Member? <a href="login.html">Sign In</a></div>
+          <br><br>
           {% with messages = get_flashed_messages() %}
             {% if messages %}
               {% for message in messages %}
-                <h3 style="color:red;">{{ message }}</h3>
+                <h5 style="color:red;">{{ message }}</h3>
               {% endfor %}
             {% endif %}
           {% endwith %}

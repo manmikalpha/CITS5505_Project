@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Registration Form | My New Flask</title> 
+     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/myCSS.css') }}"  /> 
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+
+    
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="title"><span>User Registration Form</span></div>
+        <form action="http://localhost:5000/add" method="post">
+          <div class="row">
+            <i class="fas fa-user"></i>
+            <input type="text" id="fName" name ="fName" placeholder="First Name" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-user"></i>
+            <input type="text" id="lName" name ="lName" placeholder="Last Name" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-envelope"></i>
+            <input type="text" id="email" name ="email" placeholder="Email" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="pswd1" name ="pswd1" placeholder="Password" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="pswd2" name ="pswd2" placeholder="Repeat Password" required>
+          </div>
+          <div class="row button">
+            <input type="submit" value="Sign Up">
+          </div>
+          <div class="signup-link">Already Member? <a href="login.html">Sign In</a></div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

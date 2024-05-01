@@ -8,7 +8,7 @@ website for the project of CITS5505 Agile Web Dev
 | 23901924      | Ruth Fan       | ruthfan1991      |
 
 # Summary:
-Pawfect is a vibrant online platform dedicated to pet lovers who cherish capturing and sharing moments with their furry friends. This website will not only serve as a hub for pet photo sharing but also incorporate competition elements where users can win prizes based on community votes and sponsor decisions. The objective is to create a community-driven website that encourages user interaction and engagement through pet-focused content.
+Pawfect is a vibrant online platform dedicated to pet lovers who cherish capturing and sharing moments with their furry friends. This website will not only serve as a hub for pet photo sharing but also incorporate competition elements where users can win prizes based on community votes and sponsor decisions. 
 
 Project Objectives:
 -Engage Pet Lovers: Create a community space where users can share, like, and comment on pet photos.

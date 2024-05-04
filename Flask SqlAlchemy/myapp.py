@@ -32,7 +32,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     FirstName = StringField(validators=[InputRequired(), Length(min=4, max=200)], render_kw={"placeholder": "First Name"})
     LastName = StringField(validators=[InputRequired(), Length(min=4, max=200)], render_kw={"placeholder": "Last Name"})
-    Email = StringField(validators=[InputRequired(), Length(min=4, max=200)], render_kw={"placeholder": "Email"})
+    Email = StringField(validators=[InputRequired(), Length(min=4, max=200), Email("Please enter valid Email Address")], render_kw={"placeholder": "Email"})
     Password = PasswordField(validators=[InputRequired(), Length(min=4, max=200)], render_kw={"placeholder": "Password"})
         
 app.app_context().push()

@@ -60,3 +60,15 @@ button:hover{
       border: none !important;
 }
 
+.modal-dialog {
+   animation: myAnimation 0.1s forwards;
+}
+
+@keyframes myAnimation {
+   0% {
+      transform: translateX(100%);
+   }
+   100% {
+      transform: translateX(0);
+   }
+}

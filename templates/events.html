@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="static/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 10px;">
+        <a class="  navbar-brand " href="#"><div class="title-font">Pawfect</div></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="home">Home</a>
+                </li>
+                <li class="nav-item " >
+                    <a class="nav-link active" href="#">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Button to trigger the popup dialogue -->
+    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#createEventModal" style="border-radius: 0 0 15px 0;">
+        Create New Event
+    </button>
+    <br>
+    <br>
+    <div class="container d-flex justify-content-center " >
+        <div class="row" >
+            <div class="col-md-12 " >
+                <div class="btn-group " role="group" aria-label="Event Filters" style= "background-color: aliceblue;">
+                    <button type="button" class="btn btn-primary " style="margin-right: 2px;">Current Events</button>
+                    <button type="button" class="btn btn-primary ">Upcoming Events</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Popup dialogue for creating a new event -->
+    <div class="modal fade" id="createEventModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog bg-black" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="createEventModalLabel">Enter Event Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                       
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for creating a new event -->
+                   
+                        <form id="eventCreate" action="{{url_for('create_event')}}" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="title">Event Name</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter event name">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Event Date</label>
+                                <input type="date" class="form-control" id="date" name="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Event Description</label>
+                                <input type="text" class="form-control" id="description" name="description" placeholder="Enter event description">
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Event Image</label>
+                                <input type="file" class="form-control" id="image" name="image">
+                            </div>
+                            <div class="form-group">
+                                <label for="prize">Prize</label>
+                                <input type="text" class="form-control" id="prize" name="prize" placeholder="Enter prize">
+                            </div>
+                        </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="eventCreate" class="btn btn-primary" value="Update">Create Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cards for showing current events -->
+    <div class="container">
+        <div class="row">
+            {% for event in events %}
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white" style="margin-top: 10px;">
+                        <img src="{{ url_for('static', filename='img/' + event.image) }}" class="card-img-top" alt="Event Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.description }}</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            
+            <!-- <div class="col-md-4">
+                <div class="card bg-dark text-white">
+                    <img src="static/cat-banner.png" class="card-img-top" alt="Dummy Photo">
+                    <div class="card-body">
+                        <h5 class="card-title">Event 2</h5>
+                        <p class="card-text">Event description goes here.</p>
+                        <button href="#" class="btn btn-primary ">Learn More</button>
+                    </div>
+                </div>
+            </div>
+            </div> -->
+        </div>
+        
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

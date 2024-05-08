@@ -1,5 +1,5 @@
 # CITS5505_Project
-website for the project of CITS5505 Agile Web Dev
+Design and Develop an interactive project for the unit CITS5505 Agile Web Dev
 | UWA ID        | Name           | Github Username  |
 | ------------- |:-------------: | ----------------:|
 | 24109735      | Mihir Tayhsete | manmikalpha      |
@@ -7,7 +7,7 @@ website for the project of CITS5505 Agile Web Dev
 | 23866945      | Pavan Potukuchi| PavanPotukuchik  |
 | 23901924      | Ruth Fan       | ruthfan1991      |
 
-# Summary:
+# Description:
 Pawfect is a vibrant online platform dedicated to pet lovers who cherish capturing and sharing moments with their furry friends. This website will not only serve as a hub for pet photo sharing but also incorporate competition elements where users can win prizes based on community votes and sponsor decisions. 
 
 Project Objectives:
@@ -24,7 +24,10 @@ Target Audience:
 
 Conclusion:
 Pawfect aims to be more than just a pet photo sharing website—it will be a community where passion for pets is celebrated, and memorable moments are rewarded. With a focus on user engagement and content interaction, this platform will offer an enjoyable and rewarding experience for all pet lovers.
+# Architecture of the application:
+
 # Launching the application:
+
 
 # Running the tests:
 

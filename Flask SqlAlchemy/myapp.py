@@ -19,12 +19,12 @@ login_manager.login_view = 'login'
 
 #Email Configuration
 mail = Mail(app)
-app.config['MAIL_SERVER']="live.smtp.mailtrap.io"
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = "api"
-app.config['MAIL_PASSWORD'] = "0469d4f1cf2bb55c5ee45c43e50321c9"
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_SERVER']= "smtp.gmail.com"# "live.smtp.mailtrap.io"
+app.config['MAIL_PORT'] = 465 #587
+app.config['MAIL_USERNAME'] = "pythonuserflask@gmail.com"#"api"
+app.config['MAIL_PASSWORD'] =  "gurs szsm zbrh cljb" #"0469d4f1cf2bb55c5ee45c43e50321c9"
+#app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 class User(db.Model, UserMixin):
@@ -207,7 +207,7 @@ def changepassword():
 def sendemail(userid, email, uid):
     message = Message(
                         subject = 'Hello', 
-                        sender =   'mailtrap@demomailtrap.com', 
+                        sender =   'pythonuserflask@gmail.com',#'mailtrap@demomailtrap.com',
                         recipients = [email]
                         )
     message.body = "<table cellpadding='0' cellspacing='0' width='100%' bgcolor='#fafafa' style='background-color: #fafafa; border-radius: 10px; border-collapse: separate;font-size:18px; color:grey; font-family:calibri'><tbody class='ui-droppable'><tr class='ui-draggable'><td align='left' class='esd-block-text es-p20 esd-frame esd-hover esd-draggable esd-block esdev-enable-select' esd-handler-name='textElementHandler'><div class='esd-block-btn esd-no-block-library'><div class='esd-more'><a><span class='es-icon-dot-3'></span></a></div><div class='esd-move ui-draggable-handle' title='Move'><a><span class='es-icon-move'></span></a></div><div class='esd-copy ui-draggable-handle' title='Copy'><a><span class='es-icon-copy'></span></a></div><div class='esd-delete' title='Delete'><a><span class='es-icon-delete'></span></a></div></div><h3>Welcome,&nbsp;</h3><p><br></p><p style=''>You're receiving this message because you recently reset your password&nbsp;for a account.<br><br>Please copy the below token and confirm your email address for resetting your password. This step adds extra security to your business by verifying the token and email.</p>    <br></td></tr><tr><td>This is your token password reset token:</td></tr><tr><td><b>"+ uid + "</b></td></tr></tbody></table>"    

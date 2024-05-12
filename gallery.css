@@ -6,9 +6,31 @@
     transition:all .2s cubic-bezier(.34,1.12,.68,1.31);
 }
 
+@font-face { 
+    font-family: 'MyFont'; 
+    src: url('OrientalCatsLight-2OzB8.otf') format('opentype'); 
+    font-weight: normal; 
+    font-style: normal; 
+ }
+ 
+ body {
+    background-color: #424242;
+    color: #FFFFFF;
+ }
+
+ .title-font{
+    font-family: 'MyFont', sans-serif; 
+    font-size: 2em;
+    color: #ff8c00;
+    font-weight: 900;
+    margin-left: 15px;
+ }
+
+
+
 .gallery{
     min-height: 100vh;
-    background:#eee;
+    background-color:dimgray;
     padding-bottom:100px;
 }
 

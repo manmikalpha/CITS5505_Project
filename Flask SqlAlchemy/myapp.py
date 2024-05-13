@@ -115,7 +115,6 @@ def login():
 def register():
     try:
         form = RegistrationForm()
-
         if form.validate_on_submit():        
             existing_useremail = User.query.filter_by(user_email = form.Email.data).first()
             hashed_password = generate_password_hash(form.Password.data, method='pbkdf2:sha256')
@@ -154,8 +153,7 @@ def home():
 def update():
     try:
         if request.method == 'POST':
-            my_data = User.query.get(request.form.get('id'))
-            
+            my_data = User.query.get(request.form.get('id'))            
             my_data.user_fName = request.form['firstname']
             my_data.user_lName = request.form['lastname']
             my_data.user_email = request.form['email']
@@ -186,8 +184,7 @@ def email(emailID):
                             subject = 'Hello', 
                             sender =   'pythonuserflask@gmail.com', 
                             recipients = [emailID]
-                            )
-        
+                            )        
         message.body = "This is a test to " + emailID
         mail.send(message)
         flash("Email sent successfully.", 'success')
@@ -198,7 +195,6 @@ def email(emailID):
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
     try:
-
         if request.method == 'POST':
             file = request.files['file']
             upload = Upload(eventid='0', filename=file.filename, file = file.read())
@@ -214,7 +210,6 @@ def upload():
 def resetrequest():
     try:
         form = ResetRequestForm()
-
         if form.validate_on_submit():  
             user = User.query.filter_by(user_email=form.Email.data).first()
             if user:
@@ -234,7 +229,6 @@ def resetrequest():
 def changepassword():
     try:
         form = ChangePasswordForm()
-
         if form.validate_on_submit(): 
             user = User.query.filter_by(user_email=form.Email.data).first()
             if user.user_token == form.UserToken.data:
@@ -257,12 +251,13 @@ def changepassword():
     
 def sendemail(userid, email, uid):
     try:
+        user = User.query.filter_by(id=userid).first()
         message = Message(
                          subject = 'Password Reset Token', 
                          sender =   'pythonuserflask@gmail.com',#'mailtrap@demomailtrap.com', 
                          recipients = [email]
                          )
-        message.body = "<table cellpadding='0' cellspacing='0' width='100%' bgcolor='#fafafa' style='background-color: #fafafa; border-radius: 10px; border-collapse: separate;font-size:18px; color:grey; font-family:calibri'><tbody class='ui-droppable'><tr class='ui-draggable'><td align='left' class='esd-block-text es-p20 esd-frame esd-hover esd-draggable esd-block esdev-enable-select' esd-handler-name='textElementHandler'><div class='esd-block-btn esd-no-block-library'><div class='esd-more'><a><span class='es-icon-dot-3'></span></a></div><div class='esd-move ui-draggable-handle' title='Move'><a><span class='es-icon-move'></span></a></div><div class='esd-copy ui-draggable-handle' title='Copy'><a><span class='es-icon-copy'></span></a></div><div class='esd-delete' title='Delete'><a><span class='es-icon-delete'></span></a></div></div><h3>Welcome,&nbsp;</h3><p><br></p><p style=''>You're receiving this message because you recently reset your password&nbsp;for a account.<br><br>Please copy the below token and confirm your email address for resetting your password. This step adds extra security to your business by verifying the token and email.</p>    <br></td></tr><tr><td>This is your password reset token:</td></tr><tr><td><b>"+ uid + "</b></td></tr></tbody></table>"    
+        message.body = "<table cellpadding='0' cellspacing='0' width='100%' bgcolor='#fafafa' style='background-color: #fafafa; border-radius: 10px; border-collapse: separate;font-size:18px; color:grey; font-family:calibri'><tbody class='ui-droppable'><tr class='ui-draggable'><td align='left' class='esd-block-text es-p20 esd-frame esd-hover esd-draggable esd-block esdev-enable-select' esd-handler-name='textElementHandler'><div class='esd-block-btn esd-no-block-library'><div class='esd-more'><a><span class='es-icon-dot-3'></span></a></div><div class='esd-move ui-draggable-handle' title='Move'><a><span class='es-icon-move'></span></a></div><div class='esd-copy ui-draggable-handle' title='Copy'><a><span class='es-icon-copy'></span></a></div><div class='esd-delete' title='Delete'><a><span class='es-icon-delete'></span></a></div></div><h3>Welcome &nbsp;" + user.user_fName + " " + user.user_lName +",</h3><p><br></p><p style=''>You're receiving this message because you recently reset your password&nbsp;for a account.<br><br>Please copy the below token and confirm your email address for resetting your password. This step adds extra security to your business by verifying the token and email.</p>    <br></td></tr><tr><td>This is your password reset token:<br></td></tr><tr><td><b>"+ uid + "</b></td></tr></tbody></table>"    
         message.html = message.body
         mail.send(message)
 

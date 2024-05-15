@@ -217,9 +217,10 @@ def resetrequest():
                 uid = (uuid.uuid5(x,form.Email.data))
                 _sendEmail = sendemail(user.id, user.user_email, str(uid))
                 if _sendEmail == '1':
-
                     flash("Thank you for providing your email address. We'll send you a verification code shortly.", "success")
                     return render_template ('changepassword.html', form=form)
+            else:
+                flash("User email not found in the system","error")
                     
         return render_template ('resetrequest.html', form=form)
     except Exception as e:

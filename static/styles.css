@@ -49,11 +49,18 @@
 
 .text-overlay{
    color:#fff;
-   position:absolute;
+   position: absolute;
    z-index:1;
    left: 6%;
    top:25%;
-  
+}
+#nav-name{
+   
+   font-size: 1em;
+   color: #ff8c00;
+   font-weight: 900;
+   margin-left: 15px;
+
 }
 button{
       background-color: #ff8c00 !important;
@@ -76,6 +83,26 @@ button:hover{
    bottom: 40px;
    left: 10px;
    width: 20%;
+}
+
+.avatar{
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   border: 2px solid #ff8c00;
+   margin-left: 20px;
+   margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+   .text-overlay {
+      left: 2%;
+      top: 15%;
+      
+   }
+   .text-overlay h1{
+      font-size: 1.2em;
+   }
 }
 
 @keyframes myAnimation {

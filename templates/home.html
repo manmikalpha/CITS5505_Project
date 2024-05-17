@@ -10,7 +10,9 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 10px;">
-        <a class="  navbar-brand " href="#"><div class="title-font">Pawfect</div></a>
+        <a class="navbar-brand" href="#">
+            <div><span class="title-font">Pawfect</span></div>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -28,17 +30,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout">Logout</a>
+                </li>
             </ul>
+            <div id="nav-name">Hello {{current_user.user_fName}}!</div>
+            <img class="avatar" src="https://anonymous-animals.azurewebsites.net/avatar/{{current_user.user_email}}" alt="Random Avatar" class="avatar-img">
+           
         </div>
     </nav>
 
-    <div class="container w-100" style="max-width:100%;padding: 0%;" >
+    <div class="container w-100" style="max-width:100%; padding: 0%;" >
         
         <div class="text-overlay">
             <h1><div class="petfont">Capture</div> the charm of your cherished companions!</h1>
               <p>Share your best pet photos and stand a chance to get featured in our annual showcase.</p>
         </div>
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="homeCarousel" class="carousel slide h-40" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="static/dog-banner.png" class="d-block w-100" alt="Image 1">

@@ -22,7 +22,5 @@ app.config['MAIL_PASSWORD'] =  "gurs szsm zbrh cljb" #"0469d4f1cf2bb55c5ee45c43e
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 

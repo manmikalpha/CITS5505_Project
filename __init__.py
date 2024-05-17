@@ -11,3 +11,5 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 from . import routes
+if __name__ == '__main__':
+    app.run(debug=True)

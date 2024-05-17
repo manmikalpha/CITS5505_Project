@@ -1,4 +1,4 @@
-from flask import render_template, request, Response, jsonify, redirect, url_for, flash, redirect
+from flask import render_template, request, Response, jsonify, redirect, url_for, flash, redirect, abort
 import os
 from .models import db, Events,Images, User, Upload, LoginForm, RegistrationForm, ResetRequestForm, ChangePasswordForm
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -270,8 +270,6 @@ def participate_event(event_id):
     user_email = current_user.user_email
     date_created = datetime.now()
     image = Images(event_id=event_id, image_name=save, user_email=user_email, likes=likes, date_created=date_created)
-    
-
     db.session.add(image)
     db.session.commit()
     return redirect(url_for('events'))
@@ -331,3 +329,22 @@ def delete_event(event_id):
         db.session.commit()
         return redirect(url_for('events'))
     return render_template('404.html')
+
+@app.route('/select_winner/<int:event_id>/<int:image_id>', methods=['POST'])
+def select_winner(event_id, image_id):
+    event = Events.query.get(event_id)
+    if event.owner != current_user.user_email:
+        abort(403)  # Forbidden
+    event.winner = image_id
+    db.session.commit()
+    return redirect(url_for('events'))
+
+@app.route('/clear_winner/<int:event_id>', methods=['POST'])
+def clear_winner(event_id):
+    event = Events.query.get(event_id)
+    if event.owner != current_user.user_email:
+        abort(403)
+    event.winner = None
+    db.session.commit()
+    return redirect(url_for('events'))
+

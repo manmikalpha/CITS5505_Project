@@ -96,7 +96,7 @@
     <div class="container">
         <div id="events-container" class="row"></div>
     </div>
-    
+  
 
     <!-- Cards for showing past events -->
     <div class="container" id="main-container">
@@ -111,55 +111,6 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal{{ event.id }}">Learn More</button>
                         </div>
                     </div>
-                </div>
-                <!-- Modal for event details -->
-                <div class="modal fade" id="eventModal{{ event.id }}" tabindex="-1" aria-labelledby="eventModal{{ event.id }}Label" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen pe-3">
-                        <div class="modal-content bg-dark text-white">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="eventModal{{ event.id }}Label">{{ event.title }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img src="{{ url_for('static', filename='img/' + event.image) }}" class="img-fluid" alt="Event Image">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <p>{{ event.description }}</p>
-                                        <p>Date: {{ event.date }}</p>
-                                        <p>Owner: {{ event.owner }}</p>
-                                        <p>Participants: {{ event.participants }}</p>
-                                        <p>Date Created: {{ event.date_created }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <br>
-                                <h5>All Submissions:</h5>
-                            <div class="row d-flex justify-content-evenly">  
-                            {% for image in images %}
-                                {% if image.event_id == event.id %}
-                                    <div class="d-flex justify-content-center card bg-black text-center col-md-5 p-0 mt-2">
-                                        <img src="{{ url_for('static', filename='img/' + image.image_name) }}" class="card-img-top" alt="Event Image">
-                                       <div class="col-md-6 like-buttons d-flex btn-group" role="group">
-                                            <button onclick="fetchLikes('{{ image.id }}','like')" id="like/{{image.id}}" type="button" class="btn btn-success" style="margin-right:2px ;"><i class="bi bi-hand-thumbs-up-fill"></i></button>
-                                            <button id="img/{{ image.id }}" type="button" style="margin-right:2px ;" disabled>{{ image.likes }}</button>
-                                            <button onclick="fetchLikes('{{ image.id }}','dislike')" id="dislike/{{image.id}}" type="button" class="btn btn-danger"><i class="bi bi-hand-thumbs-down-fill"></i></button>
-                                       </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                            </div>
-                               
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {% if event.active %}
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#participateModal{{event.id}}">Participate</button>
-                                {% endif %}
-                        </div>
-                    </div>
-                </div>
                 </div>
                 
                                 <!-- Modal for participation form -->
@@ -190,6 +141,85 @@
     </div>
 </div>
             {% for event in events %}
+                <!-- Modal for event details -->
+                <div class="modal fade" id="eventModal{{ event.id }}" tabindex="-1" aria-labelledby="eventModal{{ event.id }}Label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen pe-3">
+                        <div class="modal-content bg-dark text-white">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eventModal{{ event.id }}Label">{{ event.title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename='img/' + event.image) }}" class="img-fluid" alt="Event Image">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p><h4>{{ event.description }}</h4></p>
+                                        <p>Date: {{ event.date }}</p>
+                                        <p>Owner: {{ event.owner }}</p>
+                                        <p>Participants: {{ event.participants }}</p>
+                                        <p>Date Created: {{ event.date_created }}</p>
+                                        {% if event.active %}
+                                            <p>Status: Active</p>
+                                        {% else %}
+                                            <p>Status: Inactive</p>
+                                        {% endif %}
+                                        {% if event.owner==current_user.user_email %}
+                                            <form action="{{ url_for('clear_winner', event_id=event.id) }}" method="post">
+                                                <button type="submit" class="btn btn-primary">Clear winner</button>
+                                            </form>
+                                        {% endif %}
+                                        
+                                    </div>
+                                    
+                                </div>
+                                <hr>
+                                <br>
+                                <div class="row d-flex justify-content-evenly">
+                                {% for image in images %}
+                                {% if event.winner and event.winner==image.id%}
+                                <h5>Winner:</h5>
+                                            <div class="winner-image">
+                                                <img src="{{ url_for('static', filename='img/' + image.image_name) }}" class="card-img-top" alt="Event Image">
+                                            </div>
+                                {% endif %}
+                                {% endfor %} 
+                                <br>
+                                <h5>All Submissions:</h5>
+                             
+                            {% for image in images %}
+                                {% if image.event_id == event.id %}
+
+                                    <div class="d-flex justify-content-center card bg-black text-center col-md-5 p-0 mt-2">
+                                        <img src="{{ url_for('static', filename='img/' + image.image_name) }}" class="card-img-top" alt="Event Image">
+                                       <div class="col-md-6 like-buttons d-flex btn-group" role="group">
+                                            <button onclick="fetchLikes('{{ image.id }}','like')" id="like/{{image.id}}" type="button" class="btn btn-success" style="margin-right:1px ;"><i class="bi bi-hand-thumbs-up-fill"></i></button>
+                                            <button id="img/{{ image.id }}" type="button" style="margin-right:2px ; width:20%;" disabled>{{ image.likes }}</button>
+                                            <button onclick="fetchLikes('{{ image.id }}','dislike')" id="dislike/{{image.id}}" type="button" class="btn btn-danger"><i class="bi bi-hand-thumbs-down-fill"></i></button>
+                                        </div>
+                                        {% if event.owner == current_user.user_email %}
+                                        <form action="{{ url_for('select_winner', event_id=event.id, image_id=image.id) }}" method="post">
+                                            <button class="winner-button" type="submit">Select as winner</button>
+                                        </form>
+                                         {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                               
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                {% if event.active %}
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#participateModal{{event.id}}">Participate</button>
+                                {% endif %}
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+
                             <!-- Modal for edit event -->
                             <div class="modal fade" id="editEventModal{{event.id}}" tabindex="-1" aria-labelledby="editEventModalLabel{{event.id}}" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -363,12 +393,15 @@
                                     <p class="card-text">${event.description}</p>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editEventModal{{"${event.id}"}}">Edit</button>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteEventModal{{ "${event.id}" }}">Delete</button>
-                                </div>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal{{ "${event.id}" }}">Manage</button>
+                                 </div>
                             </div>
                         </div>
                         `;
                     }
                 })}
+
+    
 
                 
 

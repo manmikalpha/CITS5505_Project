@@ -16,6 +16,7 @@ class Events(db.Model):
     image = db.Column(db.String(100), nullable=False)
     participants = db.Column(db.Integer, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False)
+    winner = db.Column(db.Integer, db.ForeignKey('images.id'),nullable=True)
     
     def __repr__(self):
         return f"Event('{self.title}', '{self.date}', '{self.description}', '{self.image}', '{self.prize}', '{self.participants}', '{self.date_created}')"

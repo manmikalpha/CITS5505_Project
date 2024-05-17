@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
     <title>Registration Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
@@ -15,15 +15,9 @@
 </head>
 
 <body class="darkBdy">
-
-    <section class="ftco-section">
+            
             <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section"></h2>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-6">
+                <div class="col-md-8 col-lg-8">
                     <div class="wrap d-md-flex">
                         <div class="img" style="background-image: url(static/img.png);">
                         </div>
@@ -39,7 +33,7 @@
                                 {{ render_field(form.LastName) }}
                                 {{ render_field(form.Email) }}
                                 {{ render_field(form.Password) }}
-                                <input type="submit" value="Sign Up" class="form-control btn btn-primary">
+                                <input type="submit" value="Sign Up" class="form-control btn">
                                 {% with errors = get_flashed_messages(category_filter=["error"]) %}
                                     {% if errors %}
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 12px;">
@@ -66,7 +60,7 @@
                 </div>
             </div>
         </div>
-    </section>
+
 </body>
 
 </html>

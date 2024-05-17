@@ -49,9 +49,20 @@
  article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
    display: block; }
  
+  .btn{
+    background-color: #ff8c00 !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.btn:hover{
+    background-color: #a55b00 !important;
+    color: #fff !important;
+    border: none !important;
+}
   .darkBdy
   {
-    background-color: lightslategrey;
+    background-color: #424242;
   }
   
  body {
@@ -62,7 +73,8 @@
    line-height: 1.5;
    color: #212529;
    text-align: left;
-   background-color: #fff; }
+   background-color: #fff;
+   width:95%; }
  
  [tabindex="-1"]:focus {
    outline: 0 !important; }

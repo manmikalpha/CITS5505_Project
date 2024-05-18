@@ -29,10 +29,16 @@ Pawfect aims to be more than just a pet photo sharing website—it will be a com
 # Running the tests:
 |# | TestCase Title                                                                                                              | 
 |- |:---------------------------------------------------------------------------------------------------------------------------:|
-|1 | To validate whether existing user is able to access the url -http://127.0.0.1:5000/ and login into the Pawfect application. | 
-|2 | To validate whether new user is able to access the url -http://127.0.0.1:5000/ and register and then login into the Pawfect application.|
-|3 | To validate whether existing user is able to access the url -http://127.0.0.1:5000/ and is able to reset password and login with new password and not with old password.|
-|4 |To validate whether user is able to access the url -http://127.0.0.1:5000/ and logged in into the Pawfect application is able to click on logout button.|
+|1 | To validate whether existing user is able to access the url -http://127.0.0.1:5000/| 
+|2 | Register and then login into the Pawfect application.|
+|3 | To validate whether existing user is able to reset password and login with new password and not with old password.|
+|4 | To validate whether user is able to open the homepage and click the button it already exist.|
+|5 | To validate whether exisiting user is able to upload the picture and run event page normally.|
+|6 | To validate whether user is able to open the gallery page and click the button to see annual year picture.|
+|7 | To validate whether user can open the about us page and the elements can be shown normally.|
+|8 | To validate whether user is able to click on logout button.|
+|9 | To validate whether user can open the forum page and function can operate well.|
+|10| Test the whole project|
  
  
 

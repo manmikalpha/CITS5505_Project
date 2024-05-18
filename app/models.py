@@ -16,7 +16,7 @@ class Events(db.Model):
     image = db.Column(db.String(100), nullable=False)
     participants = db.Column(db.Integer, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False)
-    winner = db.Column(db.Integer, db.ForeignKey('images.id'),nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey('images.id', use_alter=True),nullable=True)
     
     def __repr__(self):
         return f"Event('{self.title}', '{self.date}', '{self.description}', '{self.image}', '{self.prize}', '{self.participants}', '{self.date_created}')"
@@ -33,7 +33,7 @@ class Events(db.Model):
         }
 class Images(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id', use_alter=True), nullable=False)
     image_name = db.Column(db.String(100), nullable=False)
     user_email = db.Column(db.String(100), nullable=False)
     likes = db.Column(db.Integer, nullable=False)

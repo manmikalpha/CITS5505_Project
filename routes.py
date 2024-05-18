@@ -348,3 +348,10 @@ def clear_winner(event_id):
     db.session.commit()
     return redirect(url_for('events'))
 
+@app.route('/about')
+def about():
+    return render_template('Aboutus.html')
+
+@app.route('/gallery')
+def gallery():
+    return render_template('gallery.html')

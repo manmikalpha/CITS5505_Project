@@ -27,6 +27,21 @@ Pawfect aims to be more than just a pet photo sharing website—it will be a com
 # Launching the application:
 
 # Running the tests:
+
+### Steps: 
+       1. Open the terminal and navigate to the project directory.
+       2. Run the flask application by running the following command:
+          ```
+          flask run
+          ```
+       3. Open a new terminal and navigate to the project directory.
+       4. Run the following command to run the tests:
+             ```
+             python -m unittest discover tests
+             ```
+
+
+
 |# | TestCase Title                                                                                                              | 
 |- |:---------------------------------------------------------------------------------------------------------------------------:|
 |1 | To validate whether existing user is able to access the url -http://127.0.0.1:5000/| 

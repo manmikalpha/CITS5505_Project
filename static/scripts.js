@@ -1,3 +1,4 @@
+
 uploadImage = function() {
     var fileInput = document.getElementById('fileInput');
     var file = fileInput.files[0];
@@ -15,3 +16,11 @@ uploadImage = function() {
     };
     xhr.send(formData);
 }
+
+const userEmail =document.body.dataset.userEmail; ;
+const url = `https://anonymous-animals.azurewebsites.net/avatar/${userEmail}`;
+document.getElementById('avatar').src = url;
+console.log(url);
+
+
+ 

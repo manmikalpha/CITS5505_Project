@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="static/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 10px;">
@@ -46,9 +47,9 @@
         <div class="row" >
             <div class="col-md-12 " >
                 <div class="btn-group " role="group" aria-label="Event Filters" style= "background-color: aliceblue;">
-                    <button type="button" class="btn btn-primary" id="past-events-btn" style="margin-right: 2px;">Past Events</button>
-                    <button type="button" class="btn btn-primary" id="current-events-btn" style="margin-right: 2px;">Current Events</button>
-                    <button type="button" class="btn btn-primary" id="my-events-btn" >My Events</button>
+                    <button onclick="fetchEvents('past')" type="button" class="btn btn-primary" id="past-events-btn" style="margin-right: 2px;">Past Events</button>
+                    <button onclick="fetchEvents('current')" type="button" class="btn btn-primary" id="current-events-btn" style="margin-right: 2px;">Current Events</button>
+                    <button onclick="myEvents()" type="button" class="btn btn-primary" id="my-events-btn" >My Events</button>
                 </div>
             </div>
         </div>
@@ -82,7 +83,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Event Image</label>
-                                <input type="file" accept="image/*" class="form-control" id="image" name="image">
+                                <input type="file" accept="image/*" class="form-control" name="image">
                             </div>
                         </form>
                 </div>
@@ -108,7 +109,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ event.title }}</h5>
                             <p class="card-text">{{ event.description }}</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal{{ event.id }}">Learn More</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal{{event.id}}">Learn More</button>
                         </div>
                     </div>
                 </div>
@@ -131,7 +132,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                         <button type="submit" form="participationForm{{event.id}}" class="btn btn-primary" value="Update">Upload</button>
-
+                                                    </div>    
                                                     </form></div> 
                                                     </div>
                                                      </div>
@@ -139,14 +140,13 @@
             {% endfor %}
         </div>
     </div>
-</div>
             {% for event in events %}
                 <!-- Modal for event details -->
-                <div class="modal fade" id="eventModal{{ event.id }}" tabindex="-1" aria-labelledby="eventModal{{ event.id }}Label" aria-hidden="true">
+                <div class="modal fade" id="eventModal{{event.id}}" tabindex="-1" aria-labelledby="eventModalLabel{{event.id}}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen pe-3">
                         <div class="modal-content bg-dark text-white">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="eventModal{{ event.id }}Label">{{ event.title }}</h5>
+                                <h5 class="modal-title" id="eventModalLabel{{event.id}}">{{ event.title }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -155,7 +155,7 @@
                                         <img src="{{ url_for('static', filename='img/' + event.image) }}" class="img-fluid" alt="Event Image">
                                     </div>
                                     <div class="col-md-8">
-                                        <p><h4>{{ event.description }}</h4></p>
+                                        <h4>{{ event.description }}</h4>
                                         <p>Date: {{ event.date }}</p>
                                         <p>Owner: {{ event.owner }}</p>
                                         <p>Participants: {{ event.participants }}</p>
@@ -179,8 +179,10 @@
                                 <div class="row d-flex justify-content-evenly">
                                 {% for image in images %}
                                 {% if event.winner and event.winner==image.id%}
+                                
                                 <h5>Winner:</h5>
                                             <div class="winner-image">
+                                                <div id="confetti"></div>
                                                 <img src="{{ url_for('static', filename='img/' + image.image_name) }}" class="card-img-top" alt="Event Image">
                                             </div>
                                 {% endif %}
@@ -195,7 +197,7 @@
                                         <img src="{{ url_for('static', filename='img/' + image.image_name) }}" class="card-img-top" alt="Event Image">
                                        <div class="col-md-6 like-buttons d-flex btn-group" role="group">
                                             <button onclick="fetchLikes('{{ image.id }}','like')" id="like/{{image.id}}" type="button" class="btn btn-success" style="margin-right:1px ;"><i class="bi bi-hand-thumbs-up-fill"></i></button>
-                                            <button id="img/{{ image.id }}" type="button" style="margin-right:2px ; width:20%;" disabled>{{ image.likes }}</button>
+                                            <button id="img/{{image.id}}" type="button" style="margin-right:2px ; width:20%;" disabled>{{ image.likes }}</button>
                                             <button onclick="fetchLikes('{{ image.id }}','dislike')" id="dislike/{{image.id}}" type="button" class="btn btn-danger"><i class="bi bi-hand-thumbs-down-fill"></i></button>
                                         </div>
                                         {% if event.owner == current_user.user_email %}
@@ -239,7 +241,7 @@
                                                     <textarea class="form-control" id="editDescription" name="editDescription" rows="3" placeholder="Enter event description"></textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="editDate">Date</label>
+                                                    <label for="editEventDate">Date</label>
                                                     <input type="date" class="form-control" id="editEventDate" name="editDate">
                                                 </div>
                                                 <div class="modal-footer">
@@ -286,125 +288,10 @@
    
 
   
-
+    <script src="static/eventsScript.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-
-        let main_container = document.getElementById('main-container');
-        
-        document.getElementById('past-events-btn').addEventListener('click', function() {
-            fetchEvents('past');
-        });
-        
-        document.getElementById('current-events-btn').addEventListener('click', function() {
-            fetchEvents('current');
-        });
-
-        document.getElementById('my-events-btn').addEventListener('click', function() {
-            myEvents();
-        });
-        
-        function fetchEvents(type) {
-            main_container.style.display = '';
-            fetch('/get_events?type=' + type)
-                .then(response => response.json())
-                .then(events => {
-                    let eventsContainer = document.getElementById('events-container');
-                    eventsContainer.innerHTML = ''; // Clear the container
-                    for (let event of events) {
-                        let image = event.image;
-                        eventsContainer.innerHTML += `
-                        <div class="col-md-4">
-                            <div class="card bg-dark text-white">
-                                <div class="card-body">
-                                    <img src="static/img/${event.image}" class="card-img-top" alt="Dummy Photo">
-                                    <h5 class="card-title">${event.title}</h5>
-                                    <p class="card-text">${event.description}</p>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal{{ "${event.id}" }}">Learn More</button>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                        `;
-                    }
-                    eventsContainer.innerHTML += `
-                    
-                    <h2 style="margin-top:50px;">----------All Events----------</h2>
-                    `
-                    
-                   
-                });
-                
-        }
-        
-        
-
-        function fetchLikes(imageId,action) {
-        
-            
-            
-            // Make a POST request to update the likes column
-            fetch(`/update_likes/${imageId}/${action}`, {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response data
-                console.log(data);
-               
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-            let likeButton = document.getElementById(`like/${imageId}`);
-            let dislikeButton = document.getElementById(`dislike/${imageId}`);
-            let likeCount = document.getElementById(`img/${imageId}`);
-            if (action == 'like') {
-                likeButton.disabled = true;
-                dislikeButton.disabled = false;
-                likeCount.innerHTML = parseInt(likeCount.innerHTML) + 1;
-            } else {
-                dislikeButton.disabled = true;
-                likeButton.disabled = false;
-                likeCount.innerHTML = parseInt(likeCount.innerHTML) - 1;
-            }
-
-            
-
-        }
-
-        function myEvents() {
-            main_container.style.display = 'none';
-            fetch('/get_my_events')
-                .then(response => response.json())
-                .then(events => {
-                    let eventsContainer = document.getElementById('events-container');
-                    eventsContainer.innerHTML = ''; // Clear the container
-                    for (let event of events) {
-                        let image = event.image;
-                        eventsContainer.innerHTML += `
-                        <div class="col-md-4">
-                            <div class="card bg-dark text-white">
-                                <div class="card-body">
-                                    <img src="static/img/${event.image}" class="card-img-top" alt="Dummy Photo">
-                                    <h5 class="card-title">${event.title}</h5>
-                                    <p class="card-text">${event.description}</p>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editEventModal{{"${event.id}"}}">Edit</button>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteEventModal{{ "${event.id}" }}">Delete</button>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal{{ "${event.id}" }}">Manage</button>
-                                 </div>
-                            </div>
-                        </div>
-                        `;
-                    }
-                })}
-
     
-
-                
-
-        </script>
 </body>
 </html>

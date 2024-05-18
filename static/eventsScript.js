@@ -95,5 +95,10 @@ let main_container = document.getElementById('main-container');
                         `;
                     }
                 })}
+                const userEmail =document.body.dataset.userEmail; ;
+                const url = `https://anonymous-animals.azurewebsites.net/avatar/${userEmail}`;
+                document.getElementById('avatar').src = url;
+                console.log(url);
 
+                // reference: https://www.balbooa.com/help/tutorials/coding/interactions/falling-confetti-animation
                 jQuery("document").ready(function($){ var flakes = '', randomColor; for(var i = 0, len = 400; i < len; i++) { randomColor = Math.floor(Math.random()*16777215).toString(16); flakes += '<div class="ball" style="background: #'+randomColor; flakes += '; animation-duration: '+(Math.random() * 9 + 2)+'s; animation-delay: '; flakes += (Math.random() * 2 + 0)+'s;"></div>'; } document.getElementById('confetti').innerHTML = flakes;});

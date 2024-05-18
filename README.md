@@ -31,8 +31,7 @@ Pawfect aims to be more than just a pet photo sharing website—it will be a com
 |- |:---------------------------------------------------------------------------------------------------------------------------:|
 |1 | To validate whether existing user is able to access the url -http://127.0.0.1:5000/ and login into the Pawfect application. | 
 |2 | To validate whether new user is able to access the url -http://127.0.0.1:5000/ and register and then login into the Pawfect application.|
-|3 |To validate whether existing user is able to access the url -http://127.0.0.1:5000/ and is able to reset password and login with 
-new password and not with old password.|
+|3 | To validate whether existing user is able to access the url -http://127.0.0.1:5000/ and is able to reset password and login with new password and not with old password.|
 |4 |To validate whether user is able to access the url -http://127.0.0.1:5000/ and logged in into the Pawfect application is able to click on logout button.|
  
  

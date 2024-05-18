@@ -8,7 +8,14 @@
   body {
     background-color: #424242;
     color: #FFFFFF;
+    height: 100%;
+   
  }
+ html
+   {
+      scroll-behavior: smooth;
+      height: 100%;
+   }
 
  .title-font{
     font-family: 'MyFont', sans-serif; 
@@ -19,9 +26,12 @@
  }
  .petfont{
     font-family: 'MyFont', sans-serif; 
-    font-size: 1.5em;
- 
+    font-size: 4.5em;
  }
+ .petfont1{
+   font-family: 'MyFont', sans-serif; 
+   font-size: 1.5em;
+}
  ::-webkit-scrollbar {
     width: 3px;
     height: 3px;
@@ -42,9 +52,286 @@
 
 .text-overlay{
    color:#fff;
-   position:absolute;
+   position: absolute;
    z-index:1;
    left: 6%;
    top:25%;
-  
+}
+#nav-name{
+   
+   font-size: 1em;
+   color: #ff8c00;
+   font-weight: 900;
+   margin-left: 15px;
+
+}
+button{
+      background-color: #ff8c00 !important;
+      color: #fff !important;
+      border: none !important;
+}
+
+button:hover{
+      background-color: #a55b00 !important;
+      color: #fff !important;
+      border: none !important;
+}
+
+.modal-dialog {
+   animation: myAnimation 0.1s forwards;
+}
+
+.like-buttons{
+   position: relative;
+   
+   width: 100%;
+}
+
+#avatar{
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   border: 2px solid #ff8c00;
+   margin-left: 20px;
+   margin-right: 10px;
+}
+.winner-image{
+   max-width: 30vw;
+   border: 5px solid ;
+   animation: borderAnimation 2s infinite;
+   margin-left: 25vw;
+   margin-right: 25vw;
+   overflow: hidden;
+   position: relative;
+
+}
+
+.winner-button{
+   width: 100%;
+   border: 1px solid #000000 !important;
+}
+
+#confetti {
+   left: 0;
+   position: absolute;
+   right: 0;
+   z-index: 10000;
+}
+
+#confetti .ball {
+   animation-iteration-count: infinite !important;
+   -webkit-animation-iteration-count: infinite !important;
+   border-radius: 50%;
+   cursor: default;
+   display: inline-block;
+   height: 10px;
+   user-select: none;
+   -webkit-user-select: none;
+   width: 10px;
+}
+
+@-webkit-keyframes falling-left {
+   0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      opacity: 1;
+   }
+   10% {
+      opacity: 0;
+   }
+   20% {
+      opacity: 1;
+   }
+   30% {
+      opacity: 0;
+   }
+   40% {
+      opacity: 1;
+   }
+   50% {
+      opacity: 0;
+   }
+   60% {
+      opacity: 1;
+   }
+   70% {
+      opacity: 0;
+   }
+   80% {
+      opacity: 1;
+   }
+   90% {
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translate3d(0, 120vh, 0);
+      opacity: 1;
+   }
+}
+
+@keyframes falling-left {
+   0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      opacity: 1;
+   }
+   10% {
+      opacity: 0;
+   }
+   20% {
+      opacity: 1;
+   }
+   30% {
+      opacity: 0;
+   }
+   40% {
+      opacity: 1;
+   }
+   50% {
+      opacity: 0;
+   }
+   60% {
+      opacity: 1;
+   }
+   70% {
+      opacity: 0;
+   }
+   80% {
+      opacity: 1;
+   }
+   90% {
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translate3d(0, 120vh, 0);
+      opacity: 1;
+   }
+}
+
+#confetti .ball:nth-child(2n) {
+   -webkit-animation: falling-left linear;
+   animation: falling-left linear;
+}
+
+@-webkit-keyframes falling-right {
+   0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      opacity: 0;
+   }
+   10% {
+      opacity: 1;
+   }
+   20% {
+      opacity: 0;
+   }
+   30% {
+      opacity: 1;
+   }
+   40% {
+      opacity: 0;
+   }
+   50% {
+      opacity: 1;
+   }
+   60% {
+      opacity: 0;
+   }
+   70% {
+      opacity: 1;
+   }
+   80% {
+      opacity: 0;
+   }
+   90% {
+      opacity: 1;
+   }
+   100% {
+      -webkit-transform: translate3d(0, 120vh, 0);
+      opacity: 0;
+   }
+}
+
+@keyframes falling-right {
+   0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      opacity: 1;
+   }
+   10% {
+      opacity: 0;
+   }
+   20% {
+      opacity: 1;
+   }
+   30% {
+      opacity: 0;
+   }
+   40% {
+      opacity: 1;
+   }
+   50% {
+      opacity: 0;
+   }
+   60% {
+      opacity: 1;
+   }
+   70% {
+      opacity: 0;
+   }
+   80% {
+      opacity: 1;
+   }
+   90% {
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translate3d(0, 120vh, 0);
+      opacity: 0;
+   }
+}
+
+#confetti .ball:nth-of-type(2n+1) {
+   -webkit-animation: falling-right linear;
+   animation: falling-right linear;
+}
+
+@media (max-width: 768px) {
+   #confetti {
+      display: none;
+   }
+}
+/* https://www.balbooa.com/help/tutorials/coding/interactions/falling-confetti-animation */
+
+@media (max-width: 768px) {
+   .text-overlay {
+      left: 2%;
+      top: 15%;
+      
+   }
+   .text-overlay h1{
+      font-size: 1.2em;
+   }
+}
+
+@keyframes myAnimation {
+   0% {
+      transform: translateX(100%);
+   }
+   100% {
+      transform: translateX(0);
+   }
+}
+@keyframes borderAnimation {
+   0% {
+      border-color: #ff8c00;
+   }
+   25% {
+      border-color: #ff0000;
+   }
+   50% {
+      border-color: #00ff00;
+   }
+   75% {
+      border-color: #ffff00;
+   }
+   100% {
+      border-color: #0000ff;
+   }
 }

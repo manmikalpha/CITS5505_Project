@@ -27,4 +27,14 @@ Pawfect aims to be more than just a pet photo sharing website—it will be a com
 # Launching the application:
 
 # Running the tests:
+-SeleniumLoginTestCases：
+ case1:To validate whether existing user is able to access the url - http://127.0.0.1:5000/ and login into the Pawfect application.
+ case2:To validate whether new user is able to access the url - http://127.0.0.1:5000/ and register and then login into the Pawfect application.
+ case3：To validate whether existing user is able to access the url -http://127.0.0.1:5000/ and is able to reset password and login with new password and not with 
+        old password.
+-Log outTest:To validate whether user is able to access the url -http://127.0.0.1:5000/ and logged in into the Pawfect application is able to click on logout button
+ 
+ 
+
+
 

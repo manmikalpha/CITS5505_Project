@@ -31,7 +31,7 @@ After downloading the project, follow the steps below to launch the application:
        1. Open the terminal and navigate to the project directory.
        2. Create a virtual environment by running the following command:
           ```
-          python -m venv python3 -m venv myenv 
+          python -m venv myenv 
           ```
        3. Activate the virtual environment by running the following command:
          ```

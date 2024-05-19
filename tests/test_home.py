@@ -1,35 +1,68 @@
 import unittest
+import time
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from app import db
+from app.models import User
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 
 
 class TestWebApp(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUp(self):
 
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ['enable-automation']);
-        cls.driver = webdriver.Chrome(options)
-        cls.driver.maximize_window()
-        cls.driver.implicitly_wait(10)
-        cls.driver.get("http://127.0.0.1:5000/login")
-        wait = WebDriverWait(cls.driver, 10)  # Use WebDriverWait for explicit wait
-        # Locate the username and password fields and fill them with test credentials
-        username_input = wait.until(EC.presence_of_element_located((By.ID, "Email")))
-        password_input = cls.driver.find_element(By.ID, "Password")
-        username_input.send_keys("mihirtayshete@gmail.com")
-        password_input.send_keys("meowmeow")
-        password_input.send_keys(Keys.RETURN)
+        # Setup Chrome web driver
+        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver = self.driver
+
+        # Step 1: Navigate to the login page
+        driver.get("http://127.0.0.1:5000/login")
+
+        # Step 2: Click on the "Sign Up" link to go to the registration page
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Sign Up"))).click()
+
+        # Step 3: Fill out and submit the registration form
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "FirstName"))).send_keys("test")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "LastName"))).send_keys("test")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Email"))).send_keys("testregister@gmail.com")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Password"))).send_keys("123456")
+
+        # Submit the registration form
+        submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "registerButton")))
+        driver.execute_script("arguments[0].scrollIntoView();", submit_button)  # Scroll the button into view
+
+        try:
+            submit_button.click()
+        except ElementClickInterceptedException:
+            print("Element Click Intercepted Exception: Retrying after adjusting view")
+            driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
+            time.sleep(1)  # Adding slight delay to ensure the element is interactable
+            submit_button.click()
+
+        # Step 4: Fill out and submit the login form
+        email_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Email")))
+        current_email_value = email_field.get_attribute("value")
+        registered_email = "testregister@gmail.com"
+        password = "123456"
+        if current_email_value != registered_email:
+            email_field.clear()
+            email_field.send_keys(registered_email)
+
+        password_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Password")))
+        password_field.send_keys(password)
+
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "loginButton"))).click()
+
 
 
     def test_home_page_content(self):
-        self.driver.get("http://127.0.0.1:5000/home")
-
+   
         # Assert that the home page title matches the expected title
         expected_title = "Pawfect"
         actual_title = self.driver.title
@@ -69,8 +102,12 @@ class TestWebApp(unittest.TestCase):
         self.assertTrue(self.driver.find_element(By.CSS_SELECTOR, ".footer").is_displayed())
 
     @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
+    def tearDownClass(self):
+        user = User.query.filter_by(user_email="testregister@gmail.com").first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+        self.driver.quit()
 
 if __name__ == "__main__":
     unittest.main()

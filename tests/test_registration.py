@@ -1,24 +1,21 @@
 import unittest
 import time
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from app import db
 from app.models import User
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 
-
-class EventsPageUITest(unittest.TestCase):
-    @classmethod
+class RegistrationAndLoginPageTest(unittest.TestCase):
     def setUp(self):
         # Setup Chrome web driver
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+    def test_registration_and_login(self):
         driver = self.driver
 
         # Step 1: Navigate to the login page
@@ -45,6 +42,17 @@ class EventsPageUITest(unittest.TestCase):
             time.sleep(1)  # Adding slight delay to ensure the element is interactable
             submit_button.click()
 
+        # Verify successful registration and redirection to the login page
+        try:
+            login_heading = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "h3.mb-4"))
+            )
+            self.assertIn("Sign In", login_heading.text)
+        except TimeoutException as e:
+            print("Registration failed or not redirected to login page:", e.msg)
+            driver.save_screenshot('registration_failure.png')
+            raise
+
         # Step 4: Fill out and submit the login form
         email_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Email")))
         current_email_value = email_field.get_attribute("value")
@@ -56,47 +64,40 @@ class EventsPageUITest(unittest.TestCase):
 
         password_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Password")))
         password_field.send_keys(password)
-        password_field.send_keys(Keys.RETURN)
-        driver.implicitly_wait(10)
-        self.driver.get("http://127.0.0.1:5000/events")
 
-        
-        
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "loginButton"))).click()
 
-    def test_create_new_event_button(self):
-        
-        create_event_button = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Create New Event')]")
-        self.assertTrue(create_event_button.is_displayed())
-        create_event_button.click()
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.ID, "createEventModal")))
-        create_event_modal = self.driver.find_element(By.ID, "createEventModal")
-        self.assertTrue(create_event_modal.is_displayed())
-        title_input = self.driver.find_element(By.ID, "title")
-        date_input = self.driver.find_element(By.ID, "date")
-        description_input = self.driver.find_element(By.ID, "description")
-        image_input = self.driver.find_element(By.NAME, "image")
-        self.assertTrue(title_input.is_displayed())
-        self.assertTrue(date_input.is_displayed())
-        self.assertTrue(description_input.is_displayed())
-        self.assertTrue(image_input.is_displayed())
-        close_button = self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-secondary[data-bs-dismiss='modal']")
-        close_button.click()
-        wait = WebDriverWait(self.driver, 10)
-        past_events_button = wait.until(EC.visibility_of_element_located((By.ID, "past-events-btn")))
-        current_events_button = self.driver.find_element(By.ID, "current-events-btn")
-        my_events_button = self.driver.find_element(By.ID, "my-events-btn")
-        self.assertTrue(past_events_button.is_displayed())
-        self.assertTrue(current_events_button.is_displayed())
-        self.assertTrue(my_events_button.is_displayed())
-        
+        # Step 5: Verify successful login and validate elements on the homepage
+        try:
+            # Validate headline text
+            headline_text = WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, "h1"))
+            )
+            self.assertIn("Capture", headline_text.text)
 
-    @classmethod
-    def tearDownClass(self):
+            # Validate carousel image visibility
+            carousel_image = WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, ".carousel-item.active img"))
+            )
+            self.assertTrue(carousel_image.is_displayed())
+
+            # Validate navigation link 'Gallery'
+            gallery_link = WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located((By.LINK_TEXT, "Gallery"))
+            )
+            self.assertTrue(gallery_link.is_displayed())
+
+        except TimeoutException as e:
+            print("Login failed or homepage elements not found:", e.msg)
+            driver.save_screenshot('login_failure.png')
+            raise
+
+    def tearDown(self):
         user = User.query.filter_by(user_email="testregister@gmail.com").first()
         if user:
             db.session.delete(user)
             db.session.commit()
         self.driver.quit()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

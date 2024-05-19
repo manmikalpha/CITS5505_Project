@@ -15,7 +15,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 photos = UploadSet('photos', IMAGES)
-app.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
+app.config['UPLOADED_PHOTOS_DEST'] = 'app/static/img'
 configure_uploads(app, photos)
 
 

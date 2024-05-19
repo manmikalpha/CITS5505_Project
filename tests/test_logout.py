@@ -11,6 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class LoginAndLogoutPageTest(unittest.TestCase):
@@ -24,7 +25,40 @@ class LoginAndLogoutPageTest(unittest.TestCase):
         # Step 1: Navigate to the login page
         driver.get("http://127.0.0.1:5000/login")
 
-        # Step 2: Fill out and submit the login form
+        # Step 2: Click on the "Sign Up" link to go to the registration page
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Sign Up"))).click()
+
+        # Step 3: Fill out and submit the registration form
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "FirstName"))).send_keys("test")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "LastName"))).send_keys("test")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Email"))).send_keys("testregister@gmail.com")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "Password"))).send_keys("123456")
+
+        # Submit the registration form
+        submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "registerButton")))
+        driver.execute_script("arguments[0].scrollIntoView();", submit_button)  # Scroll the button into view
+
+        try:
+            submit_button.click()
+        except ElementClickInterceptedException:
+            print("Element Click Intercepted Exception: Retrying after adjusting view")
+            driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
+            time.sleep(1)  # Adding slight delay to ensure the element is interactable
+            submit_button.click()
+
+        # Verify successful registration and redirection to the login page
+        try:
+            login_heading = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "h3.mb-4"))
+            )
+            self.assertIn("Sign In", login_heading.text)
+        except TimeoutException as e:
+            print("Registration failed or not redirected to login page:", e.msg)
+            driver.save_screenshot('registration_failure.png')
+            raise
+        driver.get("http://127.0.0.1:5000/login")
+        # Step 4: Fill out and submit the login form
+
         registered_email = "testregister@gmail.com"
         password = "123456"
 
@@ -52,7 +86,7 @@ class LoginAndLogoutPageTest(unittest.TestCase):
             time.sleep(1)  # Adding slight delay to ensure the element is interactable
             actions.move_to_element(login_button).click().perform()
 
-        # Step 3: Verify successful login and validate elements on the homepage
+        # Step 5: Verify successful login and validate elements on the homepage
         try:
             # Validate headline text
             headline_text = WebDriverWait(driver, 10).until(
@@ -77,18 +111,23 @@ class LoginAndLogoutPageTest(unittest.TestCase):
             driver.save_screenshot('login_failure.png')
             raise
 
-        # Step 4: Click on the "Logout" link
+        # Step 6: Click on the "Logout" link
         try:
             logout_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Logout")))
             driver.execute_script("arguments[0].scrollIntoView();", logout_link)  # Scroll the link into view
 
             actions.move_to_element(logout_link).click().perform()
+            print("Logout successful")
         except TimeoutException as e:
             print("Logout link not found or clickable:", e.msg)
             driver.save_screenshot('logout_failure.png')
             raise
 
     def tearDown(self):
+        user = User.query.filter_by(user_email="testregister@gmail.com").first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
         self.driver.quit()
 
 

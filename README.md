@@ -53,7 +53,7 @@ Pawfect aims to be more than just a pet photo sharing website—it will be a com
 |7 | To validate whether user can open the about us page and the elements can be shown normally.|
 |8 | To validate whether user is able to click on logout button.|
 |9 | To validate whether user can open the forum page, ask question and others are able to answer it.|
-|10| TO validate whether the question and answers asked on the forum are stored in a database and are visible after reloading the page.|
+|10| To validate whether the question and answers asked on the forum are stored in a database and are visible after reloading the page.|
 |11| Test the entire project to ensure that all pages are interconnected smoothly and function seamlessly.|
  
  

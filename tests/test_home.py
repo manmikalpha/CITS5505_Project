@@ -71,7 +71,7 @@ class TestWebApp(unittest.TestCase):
         # Assert that the home page contains certain expected elements
         self.assertTrue(self.driver.find_element(By.CSS_SELECTOR, ".navbar").is_displayed())
         nav_links = self.driver.find_elements(By.CLASS_NAME, "nav-link")
-        expected_links = ["Home", "Events", "Gallery", "About", "Logout"]
+        expected_links = ["Home", "Events", "Gallery", "About","Forum", "Logout"]
         for link_element, expected_link_text in zip(nav_links, expected_links):
             self.assertEqual(link_element.text, expected_link_text)
         

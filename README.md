@@ -25,7 +25,34 @@ Target Audience:
 Conclusion:
 Pawfect aims to be more than just a pet photo sharing website—it will be a community where passion for pets is celebrated, and memorable moments are rewarded. With a focus on user engagement and content interaction, this platform will offer an enjoyable and rewarding experience for all pet lovers.
 # Launching the application:
+After downloading the project, follow the steps below to launch the application:
 
+### Steps:
+       1. Open the terminal and navigate to the project directory.
+       2. Create a virtual environment by running the following command:
+          ```
+          python -m venv python3 -m venv myenv 
+          ```
+       3. Activate the virtual environment by running the following command:
+         ```
+         source myenv/bin/activate #for mac
+
+         myenv\Scripts\activate #for windows
+
+         .\myenv\Scripts\Activate.ps1 #for windows powershell(if the normal terminal doesn't allow to run the script)
+         ```
+       4. Install the required packages by running the following command:
+         ```
+         pip install -r requirements.txt
+         ```
+       5. Run the flask application by running the following command:
+          ```
+          flask run
+          ```
+       6. Open a web browser and navigate to the following URL:
+         ```
+         http://http://127.0.0.1:5000/
+         ```
 # Running the tests:
 
 ### Steps: 
@@ -36,9 +63,9 @@ Pawfect aims to be more than just a pet photo sharing website—it will be a com
           ```
        3. Open a new terminal and navigate to the project directory.
        4. Run the following command to run the tests:
-             ```
-             python -m unittest discover tests
-             ```
+         ```
+         python -m unittest discover tests
+         ```
 
 
 

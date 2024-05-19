@@ -78,3 +78,13 @@ class Upload(db.Model):
     eventid = db.Column(db.Integer, nullable=False)
     filename = db.Column(db.String(200), nullable=False)
     file = db.Column(db.LargeBinary)
+    
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(500), nullable=False)
+    answers = db.relationship('Answer', backref='question', lazy=True)
+
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(500), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)

@@ -8359,4 +8359,26 @@
          background: #e3b04b;
          color: #fff; }
  
-         
+/* BM's changes */
+#faqs h2 {
+  color: #333;
+}
+
+.accordion-button {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #0d6efd;
+  background-color: #e7e7ff;
+}
+
+.accordion-body {
+  background-color: #fff;
+  color: #666;
+}
+
+.accordion-header .accordion-button:focus {
+  box-shadow: none;
+}

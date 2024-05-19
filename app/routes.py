@@ -1,6 +1,6 @@
 from flask import render_template, request, Response, jsonify, redirect, url_for, flash, redirect, abort
 import os
-from .models import db, Events,Images, User, Upload, LoginForm, RegistrationForm, ResetRequestForm, ChangePasswordForm
+from .models import db, Events,Images, User, Upload, LoginForm, RegistrationForm, ResetRequestForm, ChangePasswordForm, Question, Answer
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message
@@ -364,3 +364,25 @@ def about():
 @app.route('/gallery')
 def gallery():
     return render_template('gallery.html')
+
+@app.route('/Forum')
+def index():
+    questions = Question.query.all()
+    return render_template('Forum.html', questions=questions)
+
+@app.route('/add_question', methods=['POST'])
+def add_question():
+    text = request.json['text']
+    question = Question(text=text)
+    db.session.add(question)
+    db.session.commit()
+    return jsonify({"id": question.id, "text": question.text})
+
+@app.route('/add_answer', methods=['POST'])
+def add_answer():
+    text = request.json['text']
+    question_id = request.json['question_id']
+    answer = Answer(text=text, question_id=question_id)
+    db.session.add(answer)
+    db.session.commit()
+    return jsonify({"id": answer.id, "text": answer.text, "question_id": answer.question_id})

@@ -1,9 +1,12 @@
 import unittest
 import time
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from app import db
+from app.models import User
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC

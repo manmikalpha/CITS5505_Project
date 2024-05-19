@@ -53,6 +53,11 @@ After downloading the project, follow the steps below to launch the application:
          ```
          http://http://127.0.0.1:5000/
          ```
+       
+       After these steps, the application should be up and running on your local machine.
+       Create your own account and host your own events and manage them.
+       You can create another session by opening a new browser or incognito window and navigating to the same URL to test the application.
+       The events created by one user will not be allowed to managed by another user.
 # Running the tests:
 
 ### Steps: 

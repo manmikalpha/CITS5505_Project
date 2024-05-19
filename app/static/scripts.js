@@ -17,9 +17,10 @@ uploadImage = function() {
     xhr.send(formData);
 }
 
-const userEmail =document.body.dataset.userEmail; ;
+//jQuery used to set the user's avatar image
+const userEmail = $('body').data('userEmail');
 const url = `https://anonymous-animals.azurewebsites.net/avatar/${userEmail}`;
-document.getElementById('avatar').src = url;
+$('#avatar').attr('src', url);
 console.log(url);
 
 

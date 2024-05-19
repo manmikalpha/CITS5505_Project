@@ -245,6 +245,7 @@ def events():
     return render_template('events.html', events=events, images=images)  # pass the events to the template
 
 @app.route('/create_event' , methods=['GET', 'POST'])
+@login_required
 def create_event():
     if request.method == 'POST':
         owner = current_user.user_email
@@ -262,6 +263,7 @@ def create_event():
     return render_template('events.html', title='Create Event')
 
 @app.route('/participate_event/<int:event_id>', methods=['POST'])
+@login_required
 def participate_event(event_id):
     event = Events.query.get(event_id)
     event.participants += 1
@@ -275,6 +277,7 @@ def participate_event(event_id):
     return redirect(url_for('events'))
 
 @app.route('/get_events')
+@login_required
 def get_events():
     type = request.args.get('type')
     if type == 'past':
@@ -286,6 +289,7 @@ def get_events():
     return jsonify([event.to_dict() for event in events])
 
 @app.route('/update_likes/<image>/<action>', methods=['POST'])
+@login_required
 def update_likes(image, action):
     image = Images.query.get(image)
     if action == 'like':
@@ -296,12 +300,14 @@ def update_likes(image, action):
     return redirect(url_for('events'))
 
 @app.route('/get_my_events')
+@login_required
 def get_my_events():
     owner = current_user.user_email
     events = Events.query.filter_by(owner=owner).all()
     return jsonify([event.to_dict() for event in events])
 
 @app.route('/edit_event/<int:event_id>', methods=['GET', 'POST'])
+@login_required
 def edit_event(event_id):
     event = Events.query.get(event_id)
     if request.method == 'POST':
@@ -313,6 +319,7 @@ def edit_event(event_id):
     return render_template('events.html', event=event)
 
 @app.route('/delete_event/<int:event_id>', methods=['POST', 'GET'])
+@login_required
 def delete_event(event_id):
     images = Images.query.filter_by(event_id=event_id).all()
     for image in images:
@@ -331,6 +338,7 @@ def delete_event(event_id):
     return render_template('404.html')
 
 @app.route('/select_winner/<int:event_id>/<int:image_id>', methods=['POST'])
+@login_required
 def select_winner(event_id, image_id):
     event = Events.query.get(event_id)
     if event.owner != current_user.user_email:
@@ -340,6 +348,7 @@ def select_winner(event_id, image_id):
     return redirect(url_for('events'))
 
 @app.route('/clear_winner/<int:event_id>', methods=['POST'])
+@login_required
 def clear_winner(event_id):
     event = Events.query.get(event_id)
     if event.owner != current_user.user_email:

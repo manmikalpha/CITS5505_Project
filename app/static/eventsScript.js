@@ -1,8 +1,8 @@
-let main_container = document.getElementById('main-container');
+let main_container = $('#main-container');
         
         
         function fetchEvents(type) {
-            main_container.style.display = '';
+            main_container.show();
             fetch('/get_events?type=' + type)
                 .then(response => response.json())
                 .then(events => {
@@ -71,6 +71,7 @@ let main_container = document.getElementById('main-container');
         }
 
         function myEvents() {
+            let main_container = document.getElementById('main-container');
             main_container.style.display = 'none';
             fetch('/get_my_events')
                 .then(response => response.json())

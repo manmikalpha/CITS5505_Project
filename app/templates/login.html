@@ -40,7 +40,7 @@
                                 {{ form.csrf_token }}    
                                 {{ render_field(form.Email) }}
                                 {{ render_field(form.Password) }}
-                                <input type="submit" value="Login" class="form-control btn" >
+                                <input type="submit" id="loginButton" value="Login" class="form-control btn" >
                                 {% with errors = get_flashed_messages(category_filter=["error"]) %}
                                     {% if errors %}
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 12px;">

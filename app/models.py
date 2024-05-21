@@ -82,9 +82,13 @@ class Upload(db.Model):
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(500), nullable=False)
-    answers = db.relationship('Answer', backref='question', lazy=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref='questions')
+    answers = db.relationship('Answer', backref='question', lazy='dynamic')
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(500), nullable=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref= 'answers')

@@ -50,10 +50,14 @@
         {% for question in questions %}
         <div class="question-item my-3 p-3 shadow-sm rounded" data-id="{{ question.id }}">
             <span class="question-text"><strong>Question:</strong> {{ question.text }}</span>
+            <span class="user-name float-right">(Asked by {{ question.user.user_fName }} {{ question.user.user_lName }})</span>
             <button class="btn btn-primary btn-sm answer-btn">Answer</button>
             <div class="answer-list mt-3">
                 {% for answer in question.answers %}
-                <div class="answer-item p-2">{{ answer.text }}</div>
+                <div class="answer-item p-2">
+                    {{ answer.text }}
+                    <span class="user-name float-right">(Answered by {{ answer.user.user_fName }} {{ answer.user.user_lName }})</span>
+                </div>
                 {% endfor %}
             </div>
         </div>

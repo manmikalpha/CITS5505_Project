@@ -373,7 +373,7 @@ def index():
 @app.route('/add_question', methods=['POST'])
 def add_question():
     text = request.json['text']
-    question = Question(text=text)
+    question = Question(text=text, user_id= current_user.id)
     db.session.add(question)
     db.session.commit()
     return jsonify({"id": question.id, "text": question.text})
@@ -382,7 +382,7 @@ def add_question():
 def add_answer():
     text = request.json['text']
     question_id = request.json['question_id']
-    answer = Answer(text=text, question_id=question_id)
+    answer = Answer(text=text, question_id=question_id, user_id= current_user.id)
     db.session.add(answer)
     db.session.commit()
     return jsonify({"id": answer.id, "text": answer.text, "question_id": answer.question_id})
